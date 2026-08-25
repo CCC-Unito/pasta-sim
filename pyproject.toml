@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pasta"
-version = "0.1"
+version = "0.2"
 dependencies = [
     "numpy>=2.5.2",
     "pandas>=3.0.5",
@@ -17,3 +17,6 @@ authors = [
   {name = "Valerio Basile", email = "valerio.basile@unito.it"},
 ]
 readme = "README.md"
+
+[project.scripts]
+pasta = "pasta.cli:main"
