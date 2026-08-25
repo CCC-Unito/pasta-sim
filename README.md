@@ -34,7 +34,61 @@ disagreement comes from:
 
 ``pip install git+https://github.com/CCC-Unito/pasta-sim.git``
 
-### Example
+### Example as command-line tool
+
+````
+pasta --n-instances 100 --n-annotators 10 --ambiguity 0.1 --subjectivity 0.9 --head 5
+
+instance_id,annotator_id,repeat_id,true_class,label,p_true_class
+0,0,0,1,0,0.0021947957443178637
+0,1,0,1,0,4.245308867412442e-05
+0,2,0,1,1,0.9999999999080229
+0,3,0,1,1,0.9994805777533027
+0,4,0,1,1,0.9999977084973012
+````
+
+````
+pasta --help
+
+usage: pasta [-h] [--ambiguity [0-1]] [--subjectivity [0-1]] [--n-instances N] [--n-annotators N] [--n-classes N] [--embedding-dim N] [--n-annotator-subgroups N] [--annotations-per-instance N] [--repeats N]
+             [--class-separation F] [--instance-spread F] [--annotator-subgroup-separation F] [--annotator-spread F] [--seed N] [-o FILE] [--head N] [-q]
+
+PASTA simulator: generate a synthetic dataset of subjective annotations, with independent control over ambiguity (task/stimulus difficulty) and subjectivity (annotator disagreement).
+
+options:
+  -h, --help            show this help message and exit
+
+main parameters:
+  --ambiguity [0-1]     how ambiguous the annotation task is, from 0 (fully deterministic) to 1 (random noise). (default: 0.3)
+  --subjectivity [0-1]  how subjective the task is, from 0 (all annotators share one objective view) to 1 (labeling depends entirely on individual perception). (default: 0.3)
+
+annotation parameters:
+  --n-instances N       number of instances to generate. (default: 1000)
+  --n-annotators N      number of simulated annotators. (default: 10)
+  --n-classes N         number of possible labels. (default: 2)
+  --embedding-dim N     number of dimensions of the instance/annotator embedding space. (default: 64)
+  --n-annotator-subgroups N
+                        how many groups the annotators are polarized into. (default: 2)
+  --annotations-per-instance N
+                        how many annotators should label each instance. (default: all annotators label every instance)
+  --repeats N           how many times each annotator repeats the labeling. (default: 1)
+
+tweaks:
+  --class-separation F  distance between class prototypes. (default: 6.0)
+  --instance-spread F   how tightly instances cluster around their class. (default: 1.0)
+  --annotator-subgroup-separation F
+                        distance between annotator groups' centers. (default: 6.0)
+  --annotator-spread F  individual variation within a subgroup. (default: falls back to --class-separation)
+  --seed N              seed for the random number generator. (default: 42)
+
+output:
+  -o FILE, --output FILE
+                        path to write the resulting CSV to. (default: print to stdout)
+  --head N              only print/save the first N rows of the annotated dataset.
+  -q, --quiet           suppress the summary message printed after writing a file
+````
+
+### Example as Python library
 
 ````
 from pasta import PastaConfig, PastaSimulator
